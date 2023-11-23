@@ -1,0 +1,8 @@
+---
+#clickhouse_database_name: vector_logs
+#lickhouse_create_table_name: logs_logs
+#clickhouse_version: "22.3.3.44"
+#clickhouse_packages:
+#  - clickhouse-client
+#  - clickhouse-server
+#  - clickhouse-common-static
