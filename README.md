@@ -74,7 +74,6 @@ Role Variables
 
 vector_version - Версия используемого ПО Vector. По умолчанию 0.34.1-1
 
-```
 vector_config:
   sources:
     logs_logs:
@@ -102,7 +101,6 @@ vector_config:
   api:
     enabled: true
     address: "0.0.0.0:8686"
-```
 
 Dependencies
 ------------
@@ -114,13 +112,11 @@ Example Playbook
 
 Пример добавление роли в playbook:
 
-```
 - name: Install Vector
   tags: [vector]
   hosts: vector
   roles:
     - vector-role
-```
 
 License
 -------
@@ -131,9 +127,8 @@ Author Information
 ------------------
 
 Baranov Sergey
-```
 
-```
+
 lighthouse-role
 =========
 
@@ -155,10 +150,8 @@ Requirements
 Role Variables
 --------------
 
-```
 lighthouse_home_dir: "/usr/share/nginx/html/lighthouse"
 nginx_config_dir: "/etc/nginx"
-```
 
 Dependencies
 ------------
@@ -168,13 +161,11 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-```
 - name: Install lighthouse
   hosts: lighthouse
   tags: lighthouse
   roles:
     - lighthouse-role
-```
 
 License
 -------
