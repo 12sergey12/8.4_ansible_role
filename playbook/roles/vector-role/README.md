@@ -1,31 +1,66 @@
-Role Name
+Vector-role
 =========
 
-A brief description of the role goes here.
+Предназначена для установки на операционные системы под управлением SystemD сервиса Vector и базовое конфигурирование отслеживания изменения LOG файлов с отправкой изменений в Clickhouse
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+1. Ubuntu ОС
+2. Предустановленная БД Clickhouse.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+vector_version - Версия используемого ПО Vector. По умолчанию 0.34.1-1
+
+```
+vector_config:
+  sources:
+    logs_logs:
+      type: demo_logs
+      format: syslog
+      interval: 1
+  transforms:
+    parse_logs:
+      inputs:
+        - logs_logs
+      source: |-
+        . = parse_syslog!(string!(.message))
+        .timestamp = to_string(.timestamp)
+        .timestamp = slice!(.timestamp, start:0, end: -1)
+      type: remap
+  sinks:
+    to_clickhouse:
+      type: clickhouse
+      inputs:
+        - parse_logs
+      database: vector_logs
+      endpoint: "http://178.154.204.25:8123"
+      table: logs_logs
+      compression: gzip
+  api:
+    enabled: true
+    address: "0.0.0.0:8686"
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Для установки Clickhouse требуется роль ansible-clickhouse: https://github.com/AlexeySetevoi/ansible-clickhouse
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Пример добавление роли в playbook:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+- name: Install Vector
+  tags: [vector]
+  hosts: vector
+  roles:
+    - vector-role
+```
 
 License
 -------
@@ -35,4 +70,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Baranov Sergey
