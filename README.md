@@ -26,7 +26,7 @@
        version: "1.13"
        name: clickhouse 
    ```
-[requirements.yml](https://github.com/12sergey12/8.4_ansible_role/blob/main/playbook)
+[requirements.yml](https://github.com/12sergey12/8.4_ansible_role/blob/main/playbook/requirements.yml)
 
 2. При помощи `ansible-galaxy` скачайте себе эту роль.
 
