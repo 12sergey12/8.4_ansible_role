@@ -1,17 +1,28 @@
-Role Name
+lighthouse-role
 =========
 
-A brief description of the role goes here.
+Предназначена для конфигурирования операционных систем под управлением SystemD
+
+Роль выполняет:
+
+1. установку nginx для использования в качестве веб-сервера
+2. клонирование git-репозитория Lighthouse с исходным кодом
+3. создание конфигурационного файла nginx для доступа к статическим ресурсам Lighthouse
+4. запуск nginx
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+1. Ubuntu ОС
+2. Предустановленная БД Clickhouse
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```
+lighthouse_home_dir: "/usr/share/nginx/html/lighthouse"
+nginx_config_dir: "/etc/nginx"
+```
 
 Dependencies
 ------------
@@ -21,11 +32,13 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+- name: Install lighthouse
+  hosts: lighthouse
+  tags: lighthouse
+  roles:
+    - lighthouse-role
+```
 
 License
 -------
@@ -35,4 +48,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Baranov Sergey
